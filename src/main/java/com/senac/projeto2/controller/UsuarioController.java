@@ -34,7 +34,7 @@ public class UsuarioController {
         if (usuario == null) {
             return ResponseEntity.noContent().build();
         }else {
-            return  ResponseEntity.ok(usuario);
+            return ResponseEntity.ok(usuario);
         }
     }
 
