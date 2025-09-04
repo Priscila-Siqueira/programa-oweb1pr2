@@ -3,37 +3,28 @@ package com.senac.projeto2.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "patrocinador")
+@Table(name="patrocinador")
 public class Patrocinador {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "patrocinador_id")
-    private Integer id;
 
-    @Column(name = "patrocinador_nome", length = 100, nullable = false)
+    @Id
+    @GeneratedValue
+    @Column(name="patrocinador_id")
+    private int id;
+
+    @Column(name="patrocinador_nome",nullable = false,length = 100 )
     private String nome;
 
-    @Column(name = "patrocinador_representante_nome", length = 100, nullable = false)
+    @Column(name="patrocinador_representante_nome",nullable = false,length = 100)
     private String representanteNome;
 
-    @Column(name = "patrocinador_status")
-    private Integer status;
+    @Column(name="patrocinador_status",nullable = false)
+    private int status;
 
-    public Patrocinador() {}
-
-    public Patrocinador(Integer id, String nome, String representanteNome, Integer status) {
-        this.id = id;
-        this.nome = nome;
-        this.representanteNome = representanteNome;
-        this.status = status;
-    }
-
-    // Getters e Setters
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -45,19 +36,19 @@ public class Patrocinador {
         this.nome = nome;
     }
 
-    public String getRepresentanteNome() {
+    public String getRepresentante_nome() {
         return representanteNome;
     }
 
-    public void setRepresentanteNome(String representanteNome) {
+    public void setRepresentante_nome(String representanteNome) {
         this.representanteNome = representanteNome;
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 }

@@ -11,19 +11,19 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "usuario_id")
-   private int id;
+    private int id;
 
     @Column(name = "usuario_nome", nullable = false, length = 50)
-   private String nome;
+    private String nome;
 
     @Column(name = "usuario_cpf", nullable = false, length = 11)
-   private String cpf;
+    private String cpf;
 
     @Column(name = "usuario_data_nascimento", nullable = false)
-   private LocalDate dataNascimento;
+    private LocalDate dataNascimento;
 
     @Column(name = "usuario_status", nullable = false)
-   private int status;
+    private int status;
 
     public int getId() {
         return id;

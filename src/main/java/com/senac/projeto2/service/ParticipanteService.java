@@ -5,7 +5,6 @@ import com.senac.projeto2.repository.ParticipanteRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ParticipanteService {
@@ -15,19 +14,12 @@ public class ParticipanteService {
         this.participanteRepository = participanteRepository;
     }
 
-    public List<Participante> listarTodos() {
-        return participanteRepository.findAll();
+    public List<Participante> listarParticipantes(){
+        return this.participanteRepository.findAll();
     }
 
-    public Optional<Participante> buscarPorId(Integer id) {
-        return participanteRepository.findById(id);
+    public Participante listarParticipantePorId(int idParticipante){
+        return this.participanteRepository.findById(idParticipante).orElse(null);
     }
 
-    public Participante salvar(Participante participante) {
-        return participanteRepository.save(participante);
-    }
-
-    public void excluir(Integer id) {
-        participanteRepository.deleteById(id);
-    }
 }

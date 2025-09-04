@@ -5,7 +5,6 @@ import com.senac.projeto2.repository.JogoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class JogoService {
@@ -15,19 +14,11 @@ public class JogoService {
         this.jogoRepository = jogoRepository;
     }
 
-    public List<Jogo> listarTodos() {
-        return jogoRepository.findAll();
+    public List<Jogo> listarJogos(){
+        return this.jogoRepository.findAll();
     }
 
-    public Optional<Jogo> buscarPorId(Integer id) {
-        return jogoRepository.findById(id);
-    }
-
-    public Jogo salvar(Jogo jogo) {
-        return jogoRepository.save(jogo);
-    }
-
-    public void excluir(Integer id) {
-        jogoRepository.deleteById(id);
+    public Jogo listarJogoPorId(int idJogo){
+        return this.jogoRepository.findById(idJogo).orElse(null);
     }
 }

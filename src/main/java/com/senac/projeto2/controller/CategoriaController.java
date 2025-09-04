@@ -1,15 +1,22 @@
 package com.senac.projeto2.controller;
 
-
+import com.senac.projeto2.dto.request.CategoriaDtoRequest;
+import com.senac.projeto2.dto.response.CategoriaDtoResponse;
+import com.senac.projeto2.dto.response.UsuarioDtoResponse;
 import com.senac.projeto2.entity.Categoria;
+import com.senac.projeto2.repository.CategoriaRepository;
 import com.senac.projeto2.service.CategoriaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/categorias")
+@RequestMapping("api/categoria")
+@Tag(name="Categoria", description = "API para gerenciamento das categorias do sistema.")
 public class CategoriaController {
     private final CategoriaService categoriaService;
 
@@ -17,29 +24,42 @@ public class CategoriaController {
         this.categoriaService = categoriaService;
     }
 
-    @GetMapping
-    public List<Categoria> listarTodos() {
-        return categoriaService.listarTodos();
+    @GetMapping("/listar")
+    @Operation(summary = "Listar categorias no sistema.")
+    public ResponseEntity<List<Categoria>> listar(){
+        return  ResponseEntity.ok(categoriaService.listarCategorias());
     }
 
-    @GetMapping("/{id}")
-    public Optional<Categoria> buscarPorId(@PathVariable Integer id) {
-        return categoriaService.buscarPorId(id);
+    @GetMapping("/listarPorIdCategoria/{idCategoria}")
+    @Operation(summary = "Listar categorias no sistema pelo Id.")
+    public ResponseEntity<Categoria> listarPorIdCategoria(@PathVariable("idCategoria")Integer idCategoria){
+        Categoria categoria = categoriaService.listarCategoriaPorId(idCategoria);
+        if (categoria == null) {
+            return ResponseEntity.noContent().build();
+        }else{
+            return ResponseEntity.ok(categoria);
+        }
     }
 
-    @PostMapping
-    public Categoria salvar(@RequestBody Categoria categoria) {
-        return categoriaService.salvar(categoria);
+    @PostMapping("/criar")
+    @Operation(summary = "Cria uma nova categoria no sistema.")
+    public ResponseEntity<CategoriaDtoResponse> criar(@Valid @RequestBody CategoriaDtoRequest categoriaDtoRequest){
+
+        return  ResponseEntity.ok(categoriaService.salvar(categoriaDtoRequest));
     }
 
-    @PutMapping("/{id}")
-    public Categoria atualizar(@PathVariable Integer id, @RequestBody Categoria categoria) {
-        categoria.setId(id);
-        return categoriaService.salvar(categoria);
+    @PutMapping("/atualizar/{idCategoria}")
+    @Operation(summary = "Atualiza todos os parametros de uma categoria.")
+    public ResponseEntity<CategoriaDtoResponse>atualizar(
+            @Valid @PathVariable("idCategoria") Integer idCategoria,
+            @RequestBody CategoriaDtoRequest categoriaDtoRequest){
+        return ResponseEntity.ok(categoriaService.atualizar(idCategoria, categoriaDtoRequest));
     }
 
-    @DeleteMapping("/{id}")
-    public void excluir(@PathVariable Integer id) {
-        categoriaService.excluir(id);
+    @DeleteMapping("/apagar/{idCategoria}")
+    @Operation(summary = "Deleta uma categoria do sistema pelo id.")
+    public String apagar(@PathVariable("idCategoria") Integer idCategoria){
+        categoriaService.apagar(idCategoria);
+        return "Categoria deletada com sucesso";
     }
 }

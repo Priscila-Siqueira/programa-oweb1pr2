@@ -5,71 +5,61 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "premio")
 public class Premio {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name = "premio_id")
-    private Integer id;
+    private int id;
 
-    @Column(name = "premio_descricao", length = 300, nullable = false)
-    private String descricao;
+    @Column(name="premio_descricao",nullable = false,length = 300)
+    private String descicao;
 
-    @Column(name = "premio_ordem_premiacao")
-    private Integer ordemPremiacao;
+    @Column(name="premio_ordem_premiacao",nullable = false)
+    private int ordemPremiacao;
 
-    @Column(name = "premio_categoria")
-    private Integer categoriaId;
+    @Column(name="premio_categoria")
+    private int categoria;
 
-    @Column(name = "premio_status")
-    private Integer status;
+    @Column(name="premio_status")
+    private int status;
 
-    public Premio() {}
-
-    public Premio(Integer id, String descricao, Integer ordemPremiacao, Integer categoriaId, Integer status) {
-        this.id = id;
-        this.descricao = descricao;
-        this.ordemPremiacao = ordemPremiacao;
-        this.categoriaId = categoriaId;
-        this.status = status;
-    }
-
-    // Getters e Setters
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getDescicao() {
+        return descicao;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setDescicao(String descicao) {
+        this.descicao = descicao;
     }
 
-    public Integer getOrdemPremiacao() {
+    public int getOrdemPremiacao() {
         return ordemPremiacao;
     }
 
-    public void setOrdemPremiacao(Integer ordemPremiacao) {
+    public void setOrdemPremiacao(int ordemPremiacao) {
         this.ordemPremiacao = ordemPremiacao;
     }
 
-    public Integer getCategoriaId() {
-        return categoriaId;
+    public int getCategoria() {
+        return categoria;
     }
 
-    public void setCategoriaId(Integer categoriaId) {
-        this.categoriaId = categoriaId;
+    public void setCategoria(int categoria) {
+        this.categoria = categoria;
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 }

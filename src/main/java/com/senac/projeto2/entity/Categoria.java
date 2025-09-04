@@ -1,12 +1,14 @@
 package com.senac.projeto2.entity;
 
+
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
-@Table(name = "categoria")
+@Table(name="categoria")
 public class Categoria {
+
     @Id
     @GeneratedValue
     @Column(name="categoria_id")
@@ -20,6 +22,8 @@ public class Categoria {
 
     @OneToMany(mappedBy = "categoria")
     private List<Jogo> jogos;
+
+
 
     public int getId() {
         return id;
@@ -44,8 +48,12 @@ public class Categoria {
     public void setStatus(int status) {
         this.status = status;
     }
+
+    public List<Jogo> getJogos() {
+        return jogos;
+    }
+
+    public void setJogos(List<Jogo> jogos) {
+        this.jogos = jogos;
+    }
 }
-
-
-
-

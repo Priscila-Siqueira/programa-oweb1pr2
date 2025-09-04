@@ -2,42 +2,44 @@ package com.senac.projeto2.entity;
 
 import jakarta.persistence.*;
 
-@Entity
-@Table(name = "participante")
-public class Participante {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "participante_id")
-    private Integer id;
+import java.io.File;
+import java.util.List;
 
-    @Column(name = "participante_nome", length = 100, nullable = false)
+@Entity
+@Table(name="participante")
+public class Participante {
+
+    @Id
+    @GeneratedValue
+    @Column(name = "participante_id")
+    private int id;
+
+    @Column(name="participante_nome",nullable = false,length = 300)
     private String nome;
 
-    @Column(name = "participante_email", length = 150, nullable = false, unique = true)
+    @Column(name="participante_email",nullable = false,length = 45)
     private String email;
 
-    @Column(name = "participante_telefone", length = 20)
-    private String telefone;
+    @Column(name="participante_identificacao",nullable = false,length = 45)
+    private String identificacao;
 
-    @Column(name = "participante_status")
-    private Integer status;
+    @Column(name="participante_endereco",nullable = false,length = 300)
+    private String endereco;
 
-    public Participante() {}
+    @Column(name="participante_foto_perfil")
+    private File fotoPerfil;
 
-    public Participante(Integer id, String nome, String email, String telefone, Integer status) {
-        this.id = id;
-        this.nome = nome;
-        this.email = email;
-        this.telefone = telefone;
-        this.status = status;
-    }
+    @Column(name="participante_status")
+    private int status;
 
-    // Getters e Setters
-    public Integer getId() {
+    @OneToMany(mappedBy = "participante")
+    private List<Inscricao> inscricoes;
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -57,19 +59,43 @@ public class Participante {
         this.email = email;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public String getIdentificacao() {
+        return identificacao;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setIdentificacao(String identificacao) {
+        this.identificacao = identificacao;
     }
 
-    public Integer getStatus() {
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public File getFotoPerfil() {
+        return fotoPerfil;
+    }
+
+    public void setFotoPerfil(File fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
+    }
+
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
+    }
+
+    public List<Inscricao> getInscricoes() {
+        return inscricoes;
+    }
+
+    public void setInscricoes(List<Inscricao> inscricoes) {
+        this.inscricoes = inscricoes;
     }
 }

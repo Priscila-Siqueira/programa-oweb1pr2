@@ -5,7 +5,6 @@ import com.senac.projeto2.repository.PremioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PremioService {
@@ -15,19 +14,11 @@ public class PremioService {
         this.premioRepository = premioRepository;
     }
 
-    public List<Premio> listarTodos() {
-        return premioRepository.findAll();
+    public List<Premio> listarPremios(){
+        return this.premioRepository.findAll();
     }
 
-    public Optional<Premio> buscarPorId(Integer id) {
-        return premioRepository.findById(id);
-    }
-
-    public Premio salvar(Premio premio) {
-        return premioRepository.save(premio);
-    }
-
-    public void excluir(Integer id) {
-        premioRepository.deleteById(id);
+    public Premio listarPremioPorId(int idPremio){
+        return this.premioRepository.findById(idPremio).orElse(null);
     }
 }

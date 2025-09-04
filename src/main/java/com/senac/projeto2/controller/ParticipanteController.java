@@ -1,14 +1,22 @@
 package com.senac.projeto2.controller;
 
+import com.senac.projeto2.entity.Categoria;
 import com.senac.projeto2.entity.Participante;
 import com.senac.projeto2.service.ParticipanteService;
-import org.springframework.web.bind.annotation.*;
+import com.senac.projeto2.service.PatrocinadorService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/participantes")
+@RequestMapping("/api/participante")
+@Tag(name="Participante",description="API para gerenciamento dos participantes no sistema.")
 public class ParticipanteController {
     private final ParticipanteService participanteService;
 
@@ -16,29 +24,22 @@ public class ParticipanteController {
         this.participanteService = participanteService;
     }
 
-    @GetMapping
-    public List<Participante> listarTodos() {
-        return participanteService.listarTodos();
+    @GetMapping("/listar")
+    @Operation(summary = "Listar participantes no sistema.")
+    public ResponseEntity<List<Participante>> listar(){
+        return ResponseEntity.ok(participanteService.listarParticipantes());
     }
 
-    @GetMapping("/{id}")
-    public Optional<Participante> buscarPorId(@PathVariable Integer id) {
-        return participanteService.buscarPorId(id);
+    @GetMapping("/listarPorIdParticipante/{idParticipante}")
+    @Operation(summary = "Listar participantes no sistema pelo Id.")
+    public ResponseEntity<Participante> listarPorIdParticipante(@PathVariable("idParticipante") Integer idParticipante){
+        Participante participante = participanteService.listarParticipantePorId(idParticipante);
+        if (participante == null){
+            return ResponseEntity.noContent().build();
+        }else{
+            return ResponseEntity.ok(participante);
+        }
     }
 
-    @PostMapping
-    public Participante salvar(@RequestBody Participante participante) {
-        return participanteService.salvar(participante);
-    }
 
-    @PutMapping("/{id}")
-    public Participante atualizar(@PathVariable Integer id, @RequestBody Participante participante) {
-        participante.setId(id);
-        return participanteService.salvar(participante);
-    }
-
-    @DeleteMapping("/{id}")
-    public void excluir(@PathVariable Integer id) {
-        participanteService.excluir(id);
-    }
 }

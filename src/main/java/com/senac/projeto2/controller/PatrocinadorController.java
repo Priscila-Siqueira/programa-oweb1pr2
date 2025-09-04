@@ -1,13 +1,20 @@
 package com.senac.projeto2.controller;
+
 import com.senac.projeto2.entity.Patrocinador;
 import com.senac.projeto2.service.PatrocinadorService;
-import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/patrocinadores")
+@RequestMapping("api/patrocinador")
+@Tag(name="Patrocinador",description = "API para gerenciamento dos patrocinadores do sistema.")
 public class PatrocinadorController {
     private final PatrocinadorService patrocinadorService;
 
@@ -15,29 +22,21 @@ public class PatrocinadorController {
         this.patrocinadorService = patrocinadorService;
     }
 
-    @GetMapping
-    public List<Patrocinador> listarTodos() {
-        return patrocinadorService.listarTodos();
+    @GetMapping("/listar")
+    @Operation(summary = "Listar patrocinadores no sistema.")
+    public ResponseEntity<List<Patrocinador>> listar(){
+        return ResponseEntity.ok(patrocinadorService.listarPatrocinadores());
     }
 
-    @GetMapping("/{id}")
-    public Optional<Patrocinador> buscarPorId(@PathVariable Integer id) {
-        return patrocinadorService.buscarPorId(id);
-    }
+    @GetMapping("/listarPorIdPatrocinador/{idPatrocinador}")
+    @Operation(summary = "Listar patrocinador no sistema pelo Id.")
+    public ResponseEntity<Patrocinador> listarPorIdPatrocinador(@PathVariable("idPatrocinador") Integer idPatrocinador){
+        Patrocinador patrocinador = patrocinadorService.listarPatrocinadorPorId(idPatrocinador);
 
-    @PostMapping
-    public Patrocinador salvar(@RequestBody Patrocinador patrocinador) {
-        return patrocinadorService.salvar(patrocinador);
-    }
-
-    @PutMapping("/{id}")
-    public Patrocinador atualizar(@PathVariable Integer id, @RequestBody Patrocinador patrocinador) {
-        patrocinador.setId(id);
-        return patrocinadorService.salvar(patrocinador);
-    }
-
-    @DeleteMapping("/{id}")
-    public void excluir(@PathVariable Integer id) {
-        patrocinadorService.excluir(id);
+        if (patrocinador == null){
+            return ResponseEntity.noContent().build();
+        }else{
+            return ResponseEntity.ok(patrocinador);
+        }
     }
 }

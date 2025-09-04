@@ -2,9 +2,12 @@ package com.senac.projeto2.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+
+import java.util.List;
 
 @Entity
-@Table(name = "jogo")
+@Table(name="jogo")
 public class Jogo {
     @Id
     @GeneratedValue
@@ -17,9 +20,14 @@ public class Jogo {
     @Column(name="jogo_status",nullable = false)
     private int status;
 
-    @JoinColumn(name = "categoria_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name="categoria_id",nullable = false)
     @JsonIgnore
     private Categoria categoria;
+
+    @OneToMany(mappedBy = "jogo")
+    private List<Inscricao> inscricoes;
+
 
 
     public int getId() {
@@ -54,4 +62,11 @@ public class Jogo {
         this.categoria = categoria;
     }
 
+    public List<Inscricao> getInscricaos() {
+        return inscricoes;
+    }
+
+    public void setInscricaos(List<Inscricao> inscricaos) {
+        this.inscricoes = inscricaos;
+    }
 }

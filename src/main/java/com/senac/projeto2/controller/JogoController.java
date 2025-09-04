@@ -1,46 +1,44 @@
 package com.senac.projeto2.controller;
 
-import com.senac.projeto2.entity.Categoria;
 import com.senac.projeto2.entity.Jogo;
-import com.senac.projeto2.service.CategoriaService;
 import com.senac.projeto2.service.JogoService;
-import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.coyote.Response;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/jogos")
+@RequestMapping("api/jogo")
+@Tag(name="Jogo",description = "API para gerenciamento dos jogos no sistema")
 public class JogoController {
-    private  final JogoService jogoService;
+    private final JogoService jogoService;
 
     public JogoController(JogoService jogoService) {
         this.jogoService = jogoService;
     }
 
-    @GetMapping
-    public List<Jogo> listarTodos() {
-        return jogoService.listarTodos();
+    @GetMapping("/listar")
+    @Operation(summary = "Listar jogos no sistema")
+    public ResponseEntity<List<Jogo>> listar(){
+        return ResponseEntity.ok(jogoService.listarJogos());
     }
 
-    @GetMapping("/{id}")
-    public Optional<Jogo> buscarPorId(@PathVariable Integer id) {
-        return jogoService.buscarPorId(id);
-    }
+    @GetMapping("/listarPorIdJogo/{idJogo}")
+    @Operation(summary = "Lista os jogos no sistema pelo Id.")
+    public ResponseEntity<Jogo> listarPorIdJogo(@PathVariable("idJogo")Integer idJogo){
+        Jogo jogo = jogoService.listarJogoPorId(idJogo);
 
-    @PostMapping
-    public Jogo salvar(@RequestBody Jogo jogo) {
-        return jogoService.salvar(jogo);
-    }
+        if (jogo == null){
+            return ResponseEntity.noContent().build();
+        }else{
+            return ResponseEntity.ok(jogo);
+        }
 
-    @PutMapping("/{id}")
-    public Jogo atualizar(@PathVariable Integer id, @RequestBody Jogo jogo) {
-        jogo.setId(id);
-        return jogoService.salvar(jogo);
-    }
-
-    @DeleteMapping("/{id}")
-    public void excluir(@PathVariable Integer id) {
-        jogoService.excluir(id);
     }
 }
