@@ -1,14 +1,10 @@
 package com.senac.projeto2.dto.request;
 
-import com.senac.projeto2.entity.Jogo;
-import com.senac.projeto2.entity.Participante;
 import jakarta.validation.constraints.NotBlank;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class InscricaoDtoRequest {
-
+public class InscricaoDtoRequestUpdate {
     @NotBlank(message = "A data é obrigatória")
     private LocalDateTime data;
 
@@ -17,6 +13,8 @@ public class InscricaoDtoRequest {
 
     @NotBlank(message = "É obrigatório um jogo.")
     private Integer jogoId;
+
+    private Integer status;
 
     public LocalDateTime getData() {
         return data;
@@ -30,7 +28,7 @@ public class InscricaoDtoRequest {
         return participanteId;
     }
 
-    public void setParticipanteId(int participanteId) {
+    public void setParticipanteId(Integer participanteId) {
         this.participanteId = participanteId;
     }
 
@@ -38,7 +36,15 @@ public class InscricaoDtoRequest {
         return jogoId;
     }
 
-    public void setJogoId(int jogoId) {
+    public void setJogoId(Integer jogoId) {
         this.jogoId = jogoId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

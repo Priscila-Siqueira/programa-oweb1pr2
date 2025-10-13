@@ -15,9 +15,10 @@ public class JwtTokenService {
 
     private static final String SECRET_KEY = "4Z^XrroxR@dWxqf$mTTKwW$!@#qGr4P"; // Chave secreta utilizada para gerar e verificar o token
 
-    private static final String ISSUER = "pizzurg-api"; // Emissor do token
+    /*Mudar aqui para o nome da sua api*/
+    private static final String ISSUER = "olimpiada-api"; // Emissor do token
 
-    public String generateToken(UserDetailsImpl user) {
+    public String generateToken(UserDetailsImpl usuario) {
         try {
             // Define o algoritmo HMAC SHA256 para criar a assinatura do token passando a chave secreta definida
             Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
@@ -25,7 +26,7 @@ public class JwtTokenService {
                     .withIssuer(ISSUER) // Define o emissor do token
                     .withIssuedAt(creationDate()) // Define a data de emissão do token
                     .withExpiresAt(expirationDate()) // Define a data de expiração do token
-                    .withSubject(user.getUsername()) // Define o assunto do token (neste caso, o nome de usuário)
+                    .withSubject(usuario.getUsername()) // Define o assunto do token (neste caso, o nome de usuário)
                     .sign(algorithm); // Assina o token usando o algoritmo especificado
         } catch (JWTCreationException exception){
             throw new JWTCreationException("Erro ao gerar token.", exception);

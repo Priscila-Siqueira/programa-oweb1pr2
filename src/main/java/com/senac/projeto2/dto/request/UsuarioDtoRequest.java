@@ -1,8 +1,8 @@
 package com.senac.projeto2.dto.request;
 
 
+import com.senac.projeto2.entity.RoleName;
 import com.senac.projeto2.validators.ValidaDataNascimento;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -19,6 +19,12 @@ public class UsuarioDtoRequest {
 
     @ValidaDataNascimento
     private LocalDate dataNascimento;
+
+    private String login;
+
+    private String senha;
+
+    private RoleName roleName;
 
     public String getNome() {
         return nome;
@@ -43,4 +49,30 @@ public class UsuarioDtoRequest {
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String email) {
+        this.login = email;
+    }
+
+    public RoleName getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(RoleName roleName) {
+        this.roleName = roleName;
+    }
+
+
 }

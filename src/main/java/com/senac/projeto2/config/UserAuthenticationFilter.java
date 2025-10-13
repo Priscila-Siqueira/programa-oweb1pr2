@@ -1,7 +1,9 @@
 package com.senac.projeto2.config;
 
 import com.senac.projeto2.entity.User;
+import com.senac.projeto2.entity.Usuario;
 import com.senac.projeto2.repository.UserRepository;
+import com.senac.projeto2.repository.UsuarioRepository;
 import com.senac.projeto2.service.JwtTokenService;
 import com.senac.projeto2.service.UserDetailsImpl;
 import jakarta.servlet.FilterChain;
@@ -24,8 +26,11 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenService jwtTokenService; // Service que definimos anteriormente
 
+//    @Autowired
+//    private UserRepository userRepository; // Repository que definimos anteriormente
+
     @Autowired
-    private UserRepository userRepository; // Repository que definimos anteriormente
+    private UsuarioRepository usuarioRepository; // Repository que definimos anteriormente
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -34,7 +39,7 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
             String token = recoveryToken(request); // Recupera o token do cabeçalho Authorization da requisição
             if (token != null) {
                 String subject = jwtTokenService.getSubjectFromToken(token); // Obtém o assunto (neste caso, o nome de usuário) do token
-                User user = userRepository.findByEmail(subject).get(); // Busca o usuário pelo email (que é o assunto do token)
+                Usuario user = usuarioRepository.findByEmail(subject).get(); // Busca o usuário pelo email (que é o assunto do token)
                 UserDetailsImpl userDetails = new UserDetailsImpl(user); // Cria um UserDetails com o usuário encontrado
 
                 // Cria um objeto de autenticação do Spring Security
@@ -60,9 +65,12 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
     }
 
     // Verifica se o endpoint requer autenticação antes de processar a requisição
+    /*Configuração adicional para que o swagger funcione*/
     private boolean checkIfEndpointIsNotPublic(HttpServletRequest request) {
         String requestURI = request.getRequestURI();
-        return !Arrays.asList(SecurityConfiguration.ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).contains(requestURI);
+        return Arrays.stream(SecurityConfiguration.ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).noneMatch(publicEndpoint ->
+                requestURI.startsWith(publicEndpoint.replace("/**", "")) // suporta wildcard
+        );
     }
 
 }

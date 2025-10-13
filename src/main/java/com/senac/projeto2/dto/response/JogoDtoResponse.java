@@ -1,9 +1,6 @@
 package com.senac.projeto2.dto.response;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
-public class InscricaoDtoResponse {
+public class JogoDtoResponse {
     private int id;
 
     public int getId() {

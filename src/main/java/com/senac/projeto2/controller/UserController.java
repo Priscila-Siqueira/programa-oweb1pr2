@@ -1,8 +1,8 @@
 package com.senac.projeto2.controller;
 
 import com.senac.projeto2.dto.CreateUserDto;
-import com.senac.projeto2.dto.LoginUserDto;
-import com.senac.projeto2.dto.RecoveryJwtTokenDto;
+import com.senac.projeto2.dto.request.LoginUserDto;
+import com.senac.projeto2.dto.response.RecoveryJwtTokenDto;
 import com.senac.projeto2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

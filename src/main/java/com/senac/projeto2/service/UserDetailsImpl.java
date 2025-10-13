@@ -1,6 +1,7 @@
 package com.senac.projeto2.service;
 
 import com.senac.projeto2.entity.User;
+import com.senac.projeto2.entity.Usuario;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,10 +11,11 @@ import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
 
-    private User user; // Classe de usuário que criamos anteriormente
+//    private User user; // Classe de usuário que criamos anteriormente
+      private Usuario user;
 
-    public UserDetailsImpl(User user) {
-        this.user = user;
+    public UserDetailsImpl(Usuario usuario) {
+        this.user = usuario;
     }
 
     @Override
@@ -33,7 +35,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return user.getSenha();
     } // Retorna a credencial do usuário que criamos anteriormente
 
     @Override

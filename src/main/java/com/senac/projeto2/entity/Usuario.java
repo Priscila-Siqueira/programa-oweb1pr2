@@ -3,6 +3,7 @@ package com.senac.projeto2.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name="usuario")
@@ -24,6 +25,19 @@ public class Usuario {
 
     @Column(name = "usuario_status", nullable = false)
     private int status;
+
+    @Column(name = "usuario_login", unique = true)
+    private String email;
+
+    @Column(name = "usuario_senha")
+    private String senha;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="usuario_role",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name="role_id"))
+    private List<Role> roles;
+
 
     public int getId() {
         return id;
@@ -63,5 +77,29 @@ public class Usuario {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

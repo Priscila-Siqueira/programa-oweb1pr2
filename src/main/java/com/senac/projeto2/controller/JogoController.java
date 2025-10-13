@@ -1,15 +1,15 @@
 package com.senac.projeto2.controller;
 
+import com.senac.projeto2.dto.request.JogoDtoRequest;
+import com.senac.projeto2.dto.response.JogoDtoResponse;
 import com.senac.projeto2.entity.Jogo;
 import com.senac.projeto2.service.JogoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,4 +41,25 @@ public class JogoController {
         }
 
     }
+
+    @PutMapping("/criar")
+    @Operation(summary = "Criar um novo jogo.")
+    public ResponseEntity<JogoDtoResponse> criar(@Valid @RequestBody JogoDtoRequest jogoDtoRequest){
+        return ResponseEntity.ok(jogoService.salvar(jogoDtoRequest));
+    }
+
+    @PutMapping("/atualizar/{idJogo}")
+    @Operation(summary = "Atualiza todos os parametros de um jogo.")
+    public ResponseEntity<JogoDtoResponse> atualizar(@Valid @PathVariable("idJogo") Integer idJogo,
+                                                     @RequestBody JogoDtoRequest jogoDtoRequest){
+        return ResponseEntity.ok(jogoService.atualizar(idJogo, jogoDtoRequest));
+    }
+
+    @DeleteMapping("/apagar/{idJogo}")
+    @Operation(summary = "Deleta um jogo do sistema pelo id.")
+    public ResponseEntity<JogoDtoResponse> apagar(@PathVariable("idJogo")Integer idJogo){
+        jogoService.apagar(idJogo);
+        return ResponseEntity.noContent().build();
+    }
+
 }

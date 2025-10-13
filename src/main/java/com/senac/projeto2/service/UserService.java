@@ -2,8 +2,8 @@ package com.senac.projeto2.service;
 
 import com.senac.projeto2.config.SecurityConfiguration;
 import com.senac.projeto2.dto.CreateUserDto;
-import com.senac.projeto2.dto.LoginUserDto;
-import com.senac.projeto2.dto.RecoveryJwtTokenDto;
+import com.senac.projeto2.dto.request.LoginUserDto;
+import com.senac.projeto2.dto.response.RecoveryJwtTokenDto;
 import com.senac.projeto2.entity.Role;
 import com.senac.projeto2.entity.User;
 import com.senac.projeto2.repository.UserRepository;
@@ -34,7 +34,7 @@ public class UserService {
     public RecoveryJwtTokenDto authenticateUser(LoginUserDto loginUserDto) {
         // Cria um objeto de autenticação com o email e a senha do usuário
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                new UsernamePasswordAuthenticationToken(loginUserDto.email(), loginUserDto.password());
+                new UsernamePasswordAuthenticationToken(loginUserDto.login(), loginUserDto.password());
 
         // Autentica o usuário com as credenciais fornecidas
         Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);

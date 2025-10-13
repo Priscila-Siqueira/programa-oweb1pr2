@@ -6,6 +6,8 @@ public class CategoriaDtoResponse {
 
     private String name;
 
+    private int status;
+
     public int getId() {
         return id;
     }
@@ -20,5 +22,13 @@ public class CategoriaDtoResponse {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

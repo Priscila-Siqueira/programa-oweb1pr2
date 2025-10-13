@@ -1,6 +1,7 @@
 package com.senac.projeto2.controller;
 
 import com.senac.projeto2.dto.request.CategoriaDtoRequest;
+import com.senac.projeto2.dto.request.CategoriaDtoRequestUpdate;
 import com.senac.projeto2.dto.response.CategoriaDtoResponse;
 import com.senac.projeto2.dto.response.UsuarioDtoResponse;
 import com.senac.projeto2.entity.Categoria;
@@ -52,8 +53,8 @@ public class CategoriaController {
     @Operation(summary = "Atualiza todos os parametros de uma categoria.")
     public ResponseEntity<CategoriaDtoResponse>atualizar(
             @Valid @PathVariable("idCategoria") Integer idCategoria,
-            @RequestBody CategoriaDtoRequest categoriaDtoRequest){
-        return ResponseEntity.ok(categoriaService.atualizar(idCategoria, categoriaDtoRequest));
+            @RequestBody CategoriaDtoRequestUpdate categoriaDtoRequestUpdate){
+        return ResponseEntity.ok(categoriaService.atualizar(idCategoria, categoriaDtoRequestUpdate));
     }
 
     @DeleteMapping("/apagar/{idCategoria}")

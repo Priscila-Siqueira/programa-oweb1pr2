@@ -1,6 +1,7 @@
 package com.senac.projeto2.service;
 
 import com.senac.projeto2.dto.request.CategoriaDtoRequest;
+import com.senac.projeto2.dto.request.CategoriaDtoRequestUpdate;
 import com.senac.projeto2.dto.response.CategoriaDtoResponse;
 import com.senac.projeto2.entity.Categoria;
 import com.senac.projeto2.entity.Usuario;
@@ -22,6 +23,7 @@ public class CategoriaService {
     private final CategoriaRepository categoriaRepository;
 
     public CategoriaService(CategoriaRepository categoriaRepository) {
+
         this.categoriaRepository = categoriaRepository;
     }
 
@@ -42,10 +44,10 @@ public class CategoriaService {
         return modelMapper.map(categoriaSalva, CategoriaDtoResponse.class);
     }
 
-    public CategoriaDtoResponse atualizar(Integer idCategoria, CategoriaDtoRequest categoriaDtoRequest) {
+    public CategoriaDtoResponse atualizar(Integer idCategoria, CategoriaDtoRequestUpdate categoriaDtoRequestUpdate) {
         Categoria categoria = this.listarCategoriaPorId(idCategoria);
         if (categoria != null){
-            modelMapper.map(categoriaDtoRequest, categoria);
+            modelMapper.map(categoriaDtoRequestUpdate, categoria);
             Categoria categoriaTemp = this.categoriaRepository.save(categoria);
 
             return modelMapper.map(categoriaTemp, CategoriaDtoResponse.class);
